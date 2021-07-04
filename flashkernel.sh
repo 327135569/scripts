@@ -12,9 +12,9 @@ abort() {
 
 [ ! -f "boot.img" ] && abort "No boot.img"
 
-rm -rf xxx
-mkdir xxx 
-cd xxx
+rm -rf flashkernel_out
+mkdir flashkernel_out 
+cd flashkernel_out
 
 ../magiskboot unpack ../boot.img
 ls -la

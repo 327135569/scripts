@@ -27,14 +27,17 @@ echo "Find $PKGNAME PID: $PID"
 
 JDWP_PORT=1234
 GDB_PORT=1235
-
+echo "Forward remote port to Local port"
 
 adb forward tcp:$JDWP_PORT jdwp:$PID
 adb forward tcp:$GDB_PORT tcp:$GDB_PORT
 
-echo "Attach PID: $PID"
+echo "Local port $GDB_PORT"
 
-adb shell su -c "killall -9 gdbserver && gdbserver :$GDB_PORT --attach $PID"
+echo "Attach PID: $PID, $PKGNAME"
+
+adb shell su -c "killall -9 lldb-server" || true
+adb shell su -c "/data/local/tmp/lldb-server g --attach $PID :$GDB_PORT"
 
 echo 'Exit.'
 
